@@ -20,9 +20,13 @@ struct LoginView: View {
             .textFieldStyle(.roundedBorder)
             
             Button(action: viewModel.login) {
-                Text("login.button.title".localized)
-                    .font(.title3).bold()
-                    .foregroundStyle(.white)
+                if viewModel.isLoading {
+                    ProgressView()
+                } else {
+                    Text("login.button.title".localized)
+                        .font(.title3).bold()
+                        .foregroundStyle(.white)                    
+                }
             }
             .padding()
             .padding(.horizontal, 20)

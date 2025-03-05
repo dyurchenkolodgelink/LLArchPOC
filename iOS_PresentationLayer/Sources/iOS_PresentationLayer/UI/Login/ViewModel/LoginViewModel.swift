@@ -9,14 +9,19 @@ import Foundation
 import Combine
 import DomainLayer
 
-final class LoginViewModel: ViewModel {
+public final class LoginViewModel: ViewModel {
     private let useCases: UseCases
     
     @Published var email: String = ""
     @Published var password: String = ""
     
-    init(useCases: UseCases) {
+    init(
+        useCases: UseCases,
+        sideCar: ViewModelSideCar
+    ) throws {
         self.useCases = useCases
+        
+        try super.init(requiredPermissions: [], sideCar: sideCar)
     }
 }
 
@@ -60,7 +65,7 @@ extension LoginViewModel {
 }
 
 extension LoginViewModel {
-    static func fake() -> LoginViewModel {
-        LoginViewModel(useCases: .fake())
+    public static func fake() -> LoginViewModel {
+        try! LoginViewModel(useCases: .fake(), sideCar: .fake())
     }
 }

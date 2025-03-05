@@ -33,6 +33,9 @@
         }
       }
     },
+    "Sign Out" : {
+
+    },
     "welcome.button.title" : {
       "extractionState" : "manual",
       "localizations" : {

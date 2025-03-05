@@ -16,6 +16,13 @@ extension AnyPublisher: Fakeable where Output == Void, Failure == Error {
     }
 }
 
+extension AnyPublisher where Output == Void, Failure == Never {
+    public static func fake() -> Self {
+        Just(())
+            .eraseToAnyPublisher()
+    }
+}
+
 extension AnyPublisher where Output: Fakeable, Failure == Never, Output.T == Output {
     public static func fake() -> Self {
         Just(.fake())

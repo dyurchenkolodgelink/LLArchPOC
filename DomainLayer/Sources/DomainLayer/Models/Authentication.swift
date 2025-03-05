@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum Authentication {
+public enum Authentication: Hashable {
     case unauthenticated
     case authenticated(User)
 }

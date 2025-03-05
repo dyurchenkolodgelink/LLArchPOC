@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Name {
+public struct Name: Hashable {
     public let value: String
     
     public init(_ value: String?) throws {
