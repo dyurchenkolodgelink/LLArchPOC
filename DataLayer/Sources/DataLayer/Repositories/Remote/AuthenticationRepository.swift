@@ -10,11 +10,7 @@ import DomainLayer
 import Combine
 
 final class AuthenticationRepository: GraphQLRepository, AuthenticationRepositoryProtocol {
-    @Atomic var authentication: Authentication = .unauthenticated {
-        didSet {
-            authenticationSubject.send(authentication)
-        }
-    }
+    @Atomic var authentication: Authentication = .unauthenticated
     
     private let authenticationSubject = PassthroughSubject<Authentication, Never>()
     
@@ -24,6 +20,8 @@ final class AuthenticationRepository: GraphQLRepository, AuthenticationRepositor
     
     func set(authentication: Authentication) {
         self.authentication = authentication
+        
+        authenticationSubject.send(authentication)
     }
     
     func getAuthentication() -> AnyPublisher<Authentication, Never> {

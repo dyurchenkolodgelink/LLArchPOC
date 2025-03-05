@@ -16,6 +16,14 @@ public protocol CoordinatorsFactoryProtocol {
 public struct CoordinatorsFactory {
     let sideCar: CoordinatorSideCar
     let viewModelsFactory: ViewModelsFactoryProtocol
+    
+    public init(
+        sideCar: CoordinatorSideCar,
+        viewModelsFactory: ViewModelsFactoryProtocol
+    ) {
+        self.sideCar = sideCar
+        self.viewModelsFactory = viewModelsFactory
+    }
 }
 
 extension CoordinatorsFactory: CoordinatorsFactoryProtocol {

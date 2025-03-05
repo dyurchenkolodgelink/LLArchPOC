@@ -22,9 +22,7 @@ final class SubscribeForAuthenticationChangesUseCase: UseCase, SubscribeForAuthe
     }
     
     func execute() -> AnyPublisher<Authentication, Never> {
-        preparePublisher { [unowned self] in
-            authenticationRepository.authenticationPublisher
-        }
+        authenticationRepository.authenticationPublisher
     }
 }
 

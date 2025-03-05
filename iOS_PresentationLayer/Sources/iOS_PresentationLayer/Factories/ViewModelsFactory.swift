@@ -15,6 +15,12 @@ public protocol ViewModelsFactoryProtocol: AuthViewModelsFactoryProtocol, HomeVi
 public struct ViewModelsFactory {
     let sideCar = ViewModelSideCar()
     let useCasesFactory: UseCasesFactoryProtocol
+    
+    public init(
+        useCasesFactory: UseCasesFactoryProtocol
+    ) {
+        self.useCasesFactory = useCasesFactory
+    }
 }
 
 extension ViewModelsFactory: ViewModelsFactoryProtocol {

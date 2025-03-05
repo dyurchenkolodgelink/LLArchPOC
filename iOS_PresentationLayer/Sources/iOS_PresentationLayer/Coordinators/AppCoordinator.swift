@@ -35,7 +35,7 @@ public final class AppCoordinator: BaseCoordinator<AppCoordinator.FlowItem> {
         )
     }
     
-    @ViewBuilder override func makeRouterView() -> AnyView {
+    @ViewBuilder override public func makeRouterView() -> AnyView {
         AppRouterView(
             coordinator: self,
             viewModel: appRouterViewModel

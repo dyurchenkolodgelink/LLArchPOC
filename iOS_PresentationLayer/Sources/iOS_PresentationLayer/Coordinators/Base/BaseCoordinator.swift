@@ -87,7 +87,7 @@ public class BaseCoordinator<Item>: ObservableObject, Coordinator where Item: Co
     }
     
     @ViewBuilder
-    func makeRouterView() -> AnyView {
+    public func makeRouterView() -> AnyView {
         NavigationRouterView(
             coordinator: self,
             shouldBeDismissed: Binding(

@@ -39,7 +39,8 @@ extension UseCasesFactory: UseCasesFactoryProtocol {
     
     public func makeSignOutUseCase() -> SignOutUseCaseProtocol {
         SignOutUseCase(
-            authenticationRepository: repositoriesFactory.makeAuthenticationRepository()
+            authenticationRepository: repositoriesFactory.makeAuthenticationRepository(),
+            localStoreRepository: repositoriesFactory.makeLocalStoreRepository()
         )
     }
 }

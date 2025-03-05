@@ -30,7 +30,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "54995B512D4BE3F60065C0D5"
-               BuildableName = "LLArchPOC.app"
+               BuildableName = "LodgeLink Test.app"
                BlueprintName = "LLArchPOC"
                ReferencedContainer = "container:LLArchPOC.xcodeproj">
             </BuildableReference>

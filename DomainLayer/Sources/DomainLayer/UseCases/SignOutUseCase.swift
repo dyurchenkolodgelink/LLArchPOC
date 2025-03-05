@@ -14,15 +14,19 @@ public protocol SignOutUseCaseProtocol {
 
 final class SignOutUseCase: UseCase, SignOutUseCaseProtocol {
     let authenticationRepository: AuthenticationRepositoryProtocol
+    let localStoreRepository: LocalStoreRepositoryProtocol
     
     init(
-        authenticationRepository: AuthenticationRepositoryProtocol
+        authenticationRepository: AuthenticationRepositoryProtocol,
+        localStoreRepository: LocalStoreRepositoryProtocol
     ) {
         self.authenticationRepository = authenticationRepository
+        self.localStoreRepository = localStoreRepository
     }
     
     func execute() {
         authenticationRepository.set(authentication: .unauthenticated)
+        localStoreRepository.removeValue(for: .authToken)
     }
 }
 

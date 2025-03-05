@@ -28,4 +28,8 @@ final class LocalStoreRepository: LocalStoreRepositoryProtocol {
         
         return try decoder.decode(T.self, from: data)
     }
+    
+    func removeValue(for key: StorageKey) {
+        userDefaults.removeObject(forKey: key.rawValue)
+    }
 }

@@ -32,7 +32,7 @@ final class SignInUseCase: UseCase, SignInUseCaseProtocol {
                 
                 return repository.signIn(email: email, password: password)
                     .tryMap { [unowned self] signInResult in
-                        try localStorage.store(signInResult.token.value, for: .authToken)
+                        try localStorage.store(signInResult.token, for: .authToken)
                         repository.set(authentication: .authenticated(signInResult.user))
                         
                         return signInResult.user

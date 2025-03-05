@@ -1,0 +1,19 @@
+//
+//  Prod.xcconfig
+//  LodgeLink
+//
+//  Created by Dmytro Yurchenko on 2024-04-09.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+PRODUCT_BUNDLE_IDENTIFIER = com.lodgelink.prod
+TARGET_NAME = LodgeLink
+API_BASE_URL_DOMAIN = api.lodgelink.com
+APP_BASE_URL_DOMAIN = app.lodgelink.com
+LAUNCHSCREEN_NAME = Launch Screen Prod
+APP_ICON = AppIcon-Prod
+PROVISIONING_PROFILE_NAME = LL_Distribution
+VERSION = 1.13
+BUILD_NUMBER = 1

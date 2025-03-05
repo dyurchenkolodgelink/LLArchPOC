@@ -20,10 +20,6 @@ public final class AppRouterViewModel: ViewModel {
         self.useCases = useCases
         
         try super.init(requiredPermissions: [], sideCar: sideCar)
-    }
-    
-    override func onViewLoaded() {
-        super.onViewLoaded()
         
         useCases.subscribeForAuthenticationChangesUseCase.execute()
             .receive(on: OperationQueue.main)

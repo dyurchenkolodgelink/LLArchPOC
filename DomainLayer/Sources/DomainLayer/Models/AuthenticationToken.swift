@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct AuthenticationToken {
+public struct AuthenticationToken: Codable {
     public let value: String
     
     public init(_ value: String?) throws {

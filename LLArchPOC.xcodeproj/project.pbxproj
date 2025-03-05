@@ -43,13 +43,26 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		54995B522D4BE3F60065C0D5 /* LLArchPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LLArchPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54995B522D4BE3F60065C0D5 /* LodgeLink Test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LodgeLink Test.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		54995B672D4BE91A0065C0D5 /* LLArchPOC_Watch Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LLArchPOC_Watch Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		54FB9F022D78CB18009C0C4A /* Exceptions for "LLArchPOC" folder in "LLArchPOC" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 54995B512D4BE3F60065C0D5 /* LLArchPOC */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		54995B542D4BE3F60065C0D5 /* LLArchPOC */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				54FB9F022D78CB18009C0C4A /* Exceptions for "LLArchPOC" folder in "LLArchPOC" target */,
+			);
 			path = LLArchPOC;
 			sourceTree = "<group>";
 		};
@@ -99,7 +112,7 @@
 		54995B532D4BE3F60065C0D5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				54995B522D4BE3F60065C0D5 /* LLArchPOC.app */,
+				54995B522D4BE3F60065C0D5 /* LodgeLink Test.app */,
 				54995B672D4BE91A0065C0D5 /* LLArchPOC_Watch Watch App.app */,
 			);
 			name = Products;
@@ -140,7 +153,7 @@
 				5475CC992D76271F0021E7C0 /* DataLayer */,
 			);
 			productName = LLArchPOC;
-			productReference = 54995B522D4BE3F60065C0D5 /* LLArchPOC.app */;
+			productReference = 54995B522D4BE3F60065C0D5 /* LodgeLink Test.app */;
 			productType = "com.apple.product-type.application";
 		};
 		54995B662D4BE91A0065C0D5 /* LLArchPOC_Watch Watch App */ = {
@@ -378,6 +391,8 @@
 		};
 		54995B612D4BE3F80065C0D5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 54995B542D4BE3F60065C0D5 /* LLArchPOC */;
+			baseConfigurationReferenceRelativePath = Configs/Test.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -388,6 +403,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LLArchPOC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -408,6 +424,8 @@
 		};
 		54995B622D4BE3F80065C0D5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 54995B542D4BE3F60065C0D5 /* LLArchPOC */;
+			baseConfigurationReferenceRelativePath = Configs/Test.xcconfig;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -418,6 +436,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LLArchPOC/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

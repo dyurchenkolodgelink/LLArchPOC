@@ -8,12 +8,13 @@
 import Foundation
 import DomainLayer
 
-struct CoordinatorSideCar {
+public struct CoordinatorSideCar {
 //    let applicationSessionStore: ApplicationSessionStoreProtocol
+    public init() {}
 }
 
 extension CoordinatorSideCar: Fakeable {
-    static func fake() -> CoordinatorSideCar {
+    public static func fake() -> CoordinatorSideCar {
         CoordinatorSideCar(
 //            applicationSessionStore: FakeApplicationSessionStore()
         )
