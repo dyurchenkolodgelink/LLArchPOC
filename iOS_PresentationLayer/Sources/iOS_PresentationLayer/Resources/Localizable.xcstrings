@@ -33,9 +33,6 @@
         }
       }
     },
-    "Sign Out" : {
-
-    },
     "welcome.button.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -43,6 +40,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Welcome to the Wonderland"
+          }
+        }
+      }
+    },
+    "welcome.signOut.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign Out"
           }
         }
       }

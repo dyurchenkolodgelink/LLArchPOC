@@ -14,7 +14,7 @@ struct WelcomeView: View {
     var body: some View {
         VStack {
             Button(action: viewModel.signOut) {
-                Text("Sign Out")
+                Text("welcome.signOut.title".localized)
                     .foregroundStyle(.white)
                     .fontWeight(.bold)
                     .padding()

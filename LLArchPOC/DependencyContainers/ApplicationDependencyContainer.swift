@@ -18,10 +18,11 @@ struct ApplicationDependencyContainer {
         let useCasesFactory: UseCasesFactoryProtocol = UseCasesFactory(repositoriesFactory: repositoriesFactory)
         let viewModelsFactory: ViewModelsFactoryProtocol = ViewModelsFactory(useCasesFactory: useCasesFactory)
         let coordinatorSideCar = CoordinatorSideCar()
-        
-        coordinatorsFactory = CoordinatorsFactory(
+        let coordinatorsFactory = CoordinatorsFactory(
             sideCar: coordinatorSideCar,
             viewModelsFactory: viewModelsFactory
         )
+        
+        self.coordinatorsFactory = coordinatorsFactory
     }
 }
