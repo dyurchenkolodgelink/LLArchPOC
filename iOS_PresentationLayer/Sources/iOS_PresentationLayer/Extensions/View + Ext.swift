@@ -109,31 +109,31 @@ extension View {
         }
     }
     
-//    @ViewBuilder
-//    func errorAlert(
-//        message: Binding<String?>,
-//        action: @escaping () -> Void = {}
-//    ) -> some View {
-//        alert(
-//            Text("error.title"),
-//            isPresented: .init(
-//                get: {
-//                    !message.wrappedValue.isNilOrEmpty
-//                },
-//                set: {
-//                    if !$0 {
-//                        message.wrappedValue = nil
-//                    }
-//                }),
-//            actions: {
-//                Button("button.ok", role: .cancel, action: action)
-//            },
-//            message: {
-//                if let message = message.wrappedValue {
-//                    Text(message)
-//                }
-//            })
-//    }
+    @ViewBuilder
+    func errorAlert(
+        message: Binding<String?>,
+        action: @escaping () -> Void = {}
+    ) -> some View {
+        alert(
+            Text("error.title"),
+            isPresented: .init(
+                get: {
+                    !message.wrappedValue.isNilOrEmpty
+                },
+                set: {
+                    if !$0 {
+                        message.wrappedValue = nil
+                    }
+                }),
+            actions: {
+                Button("button.ok", role: .cancel, action: action)
+            },
+            message: {
+                if let message = message.wrappedValue {
+                    Text(message)
+                }
+            })
+    }
     
     @ViewBuilder
     func onLoad(perform action: (() -> Void)? = nil) -> some View {

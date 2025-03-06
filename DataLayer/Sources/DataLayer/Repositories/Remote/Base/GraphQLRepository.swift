@@ -42,11 +42,11 @@ class GraphQLRepository {
     func execute<Query, ResponseObject, Output>(
         query: Query,
         map: @escaping QueryMapType<Query, ResponseObject, Output>
-    ) -> AnyPublisher<Output, Error> where Query : Apollo.GraphQLQuery {
+    ) -> AnyPublisher<Output, DataError> where Query : Apollo.GraphQLQuery {
         
         cancelActive(operation: query)
         
-        return Future<Output, Error> { [unowned self] promise in
+        return Future<Output, DataError> { [unowned self] promise in
            let request = ActiveRequest(
                 operation: query,
                 cancellable: graphQLClient.execute(
@@ -58,14 +58,14 @@ class GraphQLRepository {
                     
                     switch result {
                     case let .failure(error):
-                        promise(.failure(error))
+                        promise(.failure(.networkError(error)))
                         
                     case let .success(response):
                         let outputExtractor: (ResponseObject?) throws -> ResponseObject = { response in
                             if let response {
                                 return response
                             } else {
-                                throw ResponseError.noResponse
+                                throw DataError.parsingError(ResponseError.noResponse)
                             }
                         }
                         
@@ -78,7 +78,7 @@ class GraphQLRepository {
                             
                             promise(.success(domainModel))
                         } catch {
-                            promise(.failure(error))
+                            promise(.failure(.parsingError(error)))
                         }
                     }
                 }

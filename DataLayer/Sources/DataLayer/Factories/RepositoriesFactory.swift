@@ -39,4 +39,8 @@ extension RepositoriesFactory: RepositoriesFactoryProtocol {
     public func makeLocalStoreRepository() -> any DomainLayer.LocalStoreRepositoryProtocol {
         localStoreRepository
     }
+    
+    public func makeUserRepository() -> any DomainLayer.UserRepositoryProtocol {
+        UserRepository(graphQLClient: graphQLClient)
+    }
 }

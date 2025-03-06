@@ -2,5 +2,9 @@
   "711431e39b0066af7cdfe8ebbd4f8427cf508e18fb854bdea81de1de22116eb7": {
     "name": "login",
     "source": "mutation login($emailAddress: EmailAddress!, $password: String!) {\n  login(emailAddress: $emailAddress, password: $password) {\n    __typename\n    errorMessage\n    message\n    accountToken\n    tokenExpiry\n    me {\n      __typename\n      emailAddress\n      phoneNumber\n      firstName\n      lastName\n      userId\n      company\n      position\n      activeOrganization {\n        __typename\n        id\n        name\n        permissions\n        featureFlagMapping {\n          __typename\n          id\n          active\n          featureFlag {\n            __typename\n            id\n            active\n            featureIdentifier\n          }\n        }\n      }\n    }\n  }\n}"
+  },
+  "088ae4ee888ee72bc104772edcf0a15acc015932567969ebe3ae4420b76c9087": {
+    "name": "me",
+    "source": "query me {\n  me {\n    __typename\n    emailAddress\n    phoneNumber\n    firstName\n    lastName\n    userId\n    company\n    position\n    activeOrganization {\n      __typename\n      id\n      name\n      roles\n      permissions\n      featureFlagMapping {\n        __typename\n        id\n        active\n        featureFlag {\n          __typename\n          id\n          active\n          featureIdentifier\n        }\n      }\n    }\n  }\n}"
   }
 }

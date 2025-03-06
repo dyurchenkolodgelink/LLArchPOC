@@ -1,6 +1,24 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "button.ok" : {
+
+    },
+    "error.title" : {
+
+    },
+    "Failed to get a user" : {
+
+    },
+    "Fake Button" : {
+
+    },
+    "Fake Text" : {
+
+    },
+    "Loading the user..." : {
+
+    },
     "login.button.title" : {
       "localizations" : {
         "en" : {

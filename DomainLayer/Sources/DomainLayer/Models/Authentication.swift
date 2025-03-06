@@ -7,9 +7,21 @@
 
 import Foundation
 
-public enum Authentication: Hashable {
+public enum Authentication {
     case unauthenticated
     case authenticated(User)
+}
+
+extension Authentication: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case .unauthenticated:
+            break
+            
+        case let .authenticated(user):
+            hasher.combine(user.id)
+        }
+    }
 }
 
 extension Authentication: Fakeable {

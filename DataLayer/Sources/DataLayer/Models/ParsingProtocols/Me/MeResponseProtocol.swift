@@ -33,3 +33,4 @@ extension MeResponseProtocol {
 }
 
 extension LoginMutation.Data.Login.Me: MeResponseProtocol {}
+extension MeQuery.Data.Me: MeResponseProtocol {}

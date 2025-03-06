@@ -11,6 +11,7 @@ public protocol UseCasesFactoryProtocol {
     func makeSignInUseCase() -> SignInUseCaseProtocol
     func makeSignOutUseCase() -> SignOutUseCaseProtocol
     func makeSubscribeForAuthenticationChangesUseCase() -> SubscribeForAuthenticationChangesUseCaseProtocol
+    func makeGetMeUseCase() -> GetMeUseCaseProtocol
 }
 
 public struct UseCasesFactory {
@@ -43,6 +44,13 @@ extension UseCasesFactory: UseCasesFactoryProtocol {
             localStoreRepository: repositoriesFactory.makeLocalStoreRepository()
         )
     }
+    
+    public func makeGetMeUseCase() -> GetMeUseCaseProtocol {
+        GetMeUseCase(
+            userRepository: repositoriesFactory.makeUserRepository(),
+            authenticationRepository: repositoriesFactory.makeAuthenticationRepository()
+        )
+    }
 }
 
 public struct FakeUseCasesFactory: UseCasesFactoryProtocol {
@@ -56,5 +64,9 @@ public struct FakeUseCasesFactory: UseCasesFactoryProtocol {
     
     public func makeSignOutUseCase() -> SignOutUseCaseProtocol {
         FakeSignOutUseCase()
+    }
+    
+    public func makeGetMeUseCase() -> GetMeUseCaseProtocol {
+        FakeGetMeUseCase()
     }
 }

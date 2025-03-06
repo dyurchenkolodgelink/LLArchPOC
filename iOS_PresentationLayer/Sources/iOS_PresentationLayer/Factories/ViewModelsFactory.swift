@@ -48,7 +48,8 @@ extension ViewModelsFactory: ViewModelsFactoryProtocol {
     
     public func makeWelcomeViewModel() -> WelcomeViewModel {
         let useCases = WelcomeViewModel.UseCases(
-            signOutUseCase: useCasesFactory.makeSignOutUseCase()
+            signOutUseCase: useCasesFactory.makeSignOutUseCase(),
+            getMeUseCase: useCasesFactory.makeGetMeUseCase()
         )
         
         return try! WelcomeViewModel(

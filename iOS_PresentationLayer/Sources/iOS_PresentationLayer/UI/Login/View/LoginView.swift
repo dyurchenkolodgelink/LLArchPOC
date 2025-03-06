@@ -8,10 +8,10 @@
 import SwiftUI
 import PresentationLayer
 
-struct LoginView: View {
+struct LoginView: LLView {
     @ObservedObject var viewModel: LoginViewModel
     
-    var body: some View {
+    var content: some View {
         VStack(spacing: 20) {
             Group {
                 TextField("login.email.placeholder".localized, text: $viewModel.email)
