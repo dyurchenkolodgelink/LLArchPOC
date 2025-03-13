@@ -122,15 +122,15 @@ class GraphQLRepository {
                             if let response {
                                 return response
                             } else {
-                                throw DataError.parsingError(ResponseError.noResponse)
+                                throw ResponseError.noResponse
                             }
                         }
                         
+                        if let responseError = response.errors?.first {
+                            return promise(.failure(.responseError(responseError)))
+                        }
+                        
                         do {
-                            if let responseError = response.errors?.first {
-                                throw responseError
-                            }
-                            
                             let domainModel: Output = try map(response, outputExtractor)
                             
                             promise(.success(domainModel))

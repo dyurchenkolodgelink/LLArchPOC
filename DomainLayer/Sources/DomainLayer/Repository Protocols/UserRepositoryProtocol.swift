@@ -13,6 +13,8 @@ public protocol UserRepositoryProtocol {
 }
 
 public struct FakeUserRepository: UserRepositoryProtocol {
+    public init() {}
+    
     public func getMe() -> AnyPublisher<User, DataError> {
         .fake()
     }

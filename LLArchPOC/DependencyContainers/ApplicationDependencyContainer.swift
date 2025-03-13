@@ -16,11 +16,10 @@ struct ApplicationDependencyContainer {
     init() {
         let repositoriesFactory: RepositoriesFactoryProtocol = RepositoriesFactory(projectBundle: Bundle.main)
         let useCasesFactory: UseCasesFactoryProtocol = UseCasesFactory(repositoriesFactory: repositoriesFactory)
-        let viewModelsFactory: ViewModelsFactoryProtocol = ViewModelsFactory(useCasesFactory: useCasesFactory)
         let coordinatorSideCar = CoordinatorSideCar()
         let coordinatorsFactory = CoordinatorsFactory(
             sideCar: coordinatorSideCar,
-            viewModelsFactory: viewModelsFactory
+            useCasesFactory: useCasesFactory
         )
         
         self.coordinatorsFactory = coordinatorsFactory

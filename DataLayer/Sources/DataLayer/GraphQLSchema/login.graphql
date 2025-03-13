@@ -12,20 +12,6 @@ mutation login($emailAddress: EmailAddress!, $password: String!) {
       userId
       company
       position
-      activeOrganization {
-        id
-        name
-        permissions
-        featureFlagMapping {
-            id
-            active
-            featureFlag {
-                id
-                active
-                featureIdentifier
-            }
-        }
-      }
     }
   }
 }

@@ -30,15 +30,28 @@ final class SignInUseCase: UseCase, SignInUseCaseProtocol {
                 let email = try Email(input.email)
                 let password = try Password(input.password)
                 
+                localStorage.removeValue(for: .authToken)
+                
                 return repository.signIn(email: email, password: password)
+                    .mapError { error in
+                        AuthenticationError.dataError(error)
+                    }
                     .tryMap { [unowned self] signInResult in
-                        try localStorage.store(signInResult.token, for: .authToken)
-                        repository.set(authentication: .authenticated(signInResult.user))
-                        
-                        return signInResult.user
+                        do {
+                            try localStorage.store(signInResult.token, for: .authToken)
+                            repository.set(authentication: .authenticated(signInResult.user))
+                            
+                            return signInResult.user
+                        } catch {
+                            throw AuthenticationError.dataError(.other(error))
+                        }
                     }
                     .mapError { error in
-                        AuthenticationError.dataError(.other(error))
+                        if let error = error as? AuthenticationError {
+                            return error
+                        } else {
+                            return AuthenticationError.dataError(.other(error))
+                        }
                     }
                     .eraseToAnyPublisher()
             } catch let error as CredentialsParsingError {

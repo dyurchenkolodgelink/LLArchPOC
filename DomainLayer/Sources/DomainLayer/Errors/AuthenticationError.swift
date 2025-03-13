@@ -11,6 +11,17 @@ public enum AuthenticationError: LocalizedError {
     case credentialsParsingError(CredentialsParsingError)
     case dataError(DataError)
     case unexpectedError(message: String)
+    
+    public var errorDescription: String? {
+        switch self {
+        case .credentialsParsingError(let credentialsParsingError):
+            credentialsParsingError.localizedDescription
+        case .dataError(let dataError):
+            dataError.localizedDescription
+        case .unexpectedError(let message):
+            message
+        }
+    }
 }
 
 extension AuthenticationError: Fakeable {

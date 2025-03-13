@@ -14,11 +14,11 @@ public struct RepositoriesFactory {
     let authenticationRepository: AuthenticationRepositoryProtocol
     
     public init(
-        projectBundle: Bundle
+        infoDictionary: [String: Any]?
     ) {
         let localStoreRepository = LocalStoreRepository()
         let network = Network(
-            projectBundle: projectBundle,
+            infoDictionary: infoDictionary,
             getAuthenticationToken: {
                 try? localStoreRepository.getValue(for: .authToken)
             }

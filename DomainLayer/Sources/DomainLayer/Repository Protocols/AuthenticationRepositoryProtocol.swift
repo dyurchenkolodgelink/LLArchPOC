@@ -19,6 +19,8 @@ public protocol AuthenticationRepositoryProtocol {
 public struct FakeAuthenticationRepository: AuthenticationRepositoryProtocol {
     public let authenticationPublisher: AnyPublisher<Authentication, Never> = .fake()
     
+    public init() {}
+    
     public func set(authentication: Authentication) {}
     public func getAuthentication() -> AnyPublisher<Authentication, Never> { .fake() }
     public func signIn(email: Email, password: Password) -> AnyPublisher<SignInResult, DataError> { .fake() }

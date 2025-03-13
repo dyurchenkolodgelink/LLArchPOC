@@ -29,15 +29,15 @@ enum LodgeLinkHeader: String {
 
 class Network {
     private let getAuthenticationToken: () -> AuthenticationToken?
-    private let projectBundle: Bundle
+    private let infoDictionary: [String: Any]?
     private(set) lazy var client: ApolloClient? = getApolloClient()
     private(set) lazy var store: ApolloStore = ApolloStore(cache: InMemoryNormalizedCache())
     
     init(
-        projectBundle: Bundle,
+        infoDictionary: [String: Any]?,
         getAuthenticationToken: @escaping () -> AuthenticationToken?
     ) {
-        self.projectBundle = projectBundle
+        self.infoDictionary = infoDictionary
         self.getAuthenticationToken = getAuthenticationToken
     }
     
@@ -45,15 +45,15 @@ class Network {
         store = ApolloStore(cache: InMemoryNormalizedCache())
     }
     
-    func getApolloClient() -> ApolloClient? {
-
-        let configuration = URLSessionConfiguration.default
+    func getApolloClient(
+        configuration: URLSessionConfiguration = .default
+    ) -> ApolloClient? {
         
         configuration.timeoutIntervalForRequest = 120
         configuration.timeoutIntervalForResource = 120
 
         if let authToken = getAuthenticationToken()?.value {
-            var authPayloads = [
+            let authPayloads = [
                 LodgeLinkHeader.authorization.rawValue: "Bearer \(authToken)",
                 LodgeLinkHeader.platformType.rawValue: "Ios",
                 LodgeLinkHeader.platformLocale.rawValue: Locale.current.identifier
@@ -73,7 +73,7 @@ class Network {
             getAuthenticationToken: getAuthenticationToken
         )
         
-        guard let infoDictionary = projectBundle.infoDictionary,
+        guard let infoDictionary,
               let baseUrlString = infoDictionary["API Base Url"] as? String,
               let baseUrl = URL(string: baseUrlString)
         else {
@@ -173,7 +173,7 @@ class CustomInterceptor: ApolloInterceptor {
                     guard let object = success.data?.jsonObject,
                           let data = try? JSONSerialization.data(withJSONObject: object, options: .prettyPrinted),
                           let string = NSString(data: data, encoding: String.Encoding.utf8.rawValue)
-                    else { return assertionFailure() }
+                    else { break }
                     
                     let elapsedTime = DispatchTime.now().uptimeNanoseconds - startTime
                     
