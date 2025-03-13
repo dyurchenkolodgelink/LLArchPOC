@@ -14,7 +14,7 @@ struct ApplicationDependencyContainer {
     let coordinatorsFactory: CoordinatorsFactoryProtocol
     
     init() {
-        let repositoriesFactory: RepositoriesFactoryProtocol = RepositoriesFactory(projectBundle: Bundle.main)
+        let repositoriesFactory: RepositoriesFactoryProtocol = RepositoriesFactory(infoDictionary: Bundle.main.infoDictionary)
         let useCasesFactory: UseCasesFactoryProtocol = UseCasesFactory(repositoriesFactory: repositoriesFactory)
         let coordinatorSideCar = CoordinatorSideCar()
         let coordinatorsFactory = CoordinatorsFactory(
