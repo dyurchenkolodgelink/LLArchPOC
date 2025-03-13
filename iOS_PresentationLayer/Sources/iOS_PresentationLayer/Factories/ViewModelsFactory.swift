@@ -8,15 +8,15 @@
 import Foundation
 import DomainLayer
 
-public protocol ViewModelsFactoryProtocol: AuthViewModelsFactoryProtocol, HomeViewModelsFactoryProtocol {
+protocol ViewModelsFactoryProtocol: AuthViewModelsFactoryProtocol, HomeViewModelsFactoryProtocol {
     func makeAppRouterViewModel() -> AppRouterViewModel
 }
 
-public struct ViewModelsFactory {
+struct ViewModelsFactory {
     let sideCar = ViewModelSideCar()
     let useCasesFactory: UseCasesFactoryProtocol
     
-    public init(
+    init(
         useCasesFactory: UseCasesFactoryProtocol
     ) {
         self.useCasesFactory = useCasesFactory
@@ -24,7 +24,7 @@ public struct ViewModelsFactory {
 }
 
 extension ViewModelsFactory: ViewModelsFactoryProtocol {
-    public func makeAppRouterViewModel() -> AppRouterViewModel {
+    func makeAppRouterViewModel() -> AppRouterViewModel {
         let useCases = AppRouterViewModel.UseCases(
             subscribeForAuthenticationChangesUseCase: useCasesFactory.makeSubscribeForAuthenticationChangesUseCase()
         )
@@ -35,7 +35,7 @@ extension ViewModelsFactory: ViewModelsFactoryProtocol {
         )
     }
     
-    public func makeLoginViewModel() -> LoginViewModel {
+    func makeLoginViewModel() -> LoginViewModel {
         let useCases = LoginViewModel.UseCases(
             signInUseCase: useCasesFactory.makeSignInUseCase()
         )
@@ -46,7 +46,7 @@ extension ViewModelsFactory: ViewModelsFactoryProtocol {
         )
     }
     
-    public func makeWelcomeViewModel() -> WelcomeViewModel {
+    func makeWelcomeViewModel() -> WelcomeViewModel {
         let useCases = WelcomeViewModel.UseCases(
             signOutUseCase: useCasesFactory.makeSignOutUseCase(),
             getMeUseCase: useCasesFactory.makeGetMeUseCase()
@@ -59,8 +59,8 @@ extension ViewModelsFactory: ViewModelsFactoryProtocol {
     }
 }
 
-public struct FakeViewModelsFactory: ViewModelsFactoryProtocol {
-    public func makeAppRouterViewModel() -> AppRouterViewModel { .fake() }
-    public func makeLoginViewModel() -> LoginViewModel { .fake() }
-    public func makeWelcomeViewModel() -> WelcomeViewModel { .fake() }
+struct FakeViewModelsFactory: ViewModelsFactoryProtocol {
+    func makeAppRouterViewModel() -> AppRouterViewModel { .fake() }
+    func makeLoginViewModel() -> LoginViewModel { .fake() }
+    func makeWelcomeViewModel() -> WelcomeViewModel { .fake() }
 }

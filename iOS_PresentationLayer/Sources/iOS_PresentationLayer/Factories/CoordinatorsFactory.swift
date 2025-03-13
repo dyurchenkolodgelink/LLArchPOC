@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import DomainLayer
 
 public protocol CoordinatorsFactoryProtocol {
     func makeAppCoordinator() -> AppCoordinator
@@ -14,15 +15,15 @@ public protocol CoordinatorsFactoryProtocol {
 }
 
 public struct CoordinatorsFactory {
-    let sideCar: CoordinatorSideCar
-    let viewModelsFactory: ViewModelsFactoryProtocol
+    private let sideCar: CoordinatorSideCar
+    private let viewModelsFactory: ViewModelsFactoryProtocol
     
     public init(
         sideCar: CoordinatorSideCar,
-        viewModelsFactory: ViewModelsFactoryProtocol
+        useCasesFactory: UseCasesFactoryProtocol
     ) {
         self.sideCar = sideCar
-        self.viewModelsFactory = viewModelsFactory
+        self.viewModelsFactory = ViewModelsFactory(useCasesFactory: useCasesFactory)
     }
 }
 
