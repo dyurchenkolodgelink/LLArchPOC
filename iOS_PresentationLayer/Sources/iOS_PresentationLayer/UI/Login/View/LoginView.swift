@@ -18,6 +18,7 @@ struct LoginView: LLView {
                 TextField("login.password.placeholder".localized, text: $viewModel.password)
             }
             .textFieldStyle(.roundedBorder)
+            .tint(.gray)
             
             Button(action: viewModel.login) {
                 if viewModel.isLoading {
