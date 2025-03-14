@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -16,15 +16,12 @@ let package = Package(
             targets: ["TestUtils"]
         )
     ],
-//    dependencies: [
-//        .package(path: "../TestUtils")
-//    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "DomainLayer"),
-        .target(name: "TestUtils"),
+        .target(name: "TestUtils", dependencies: ["DomainLayer"]),
         .testTarget(
             name: "DomainLayerTests",
             dependencies: ["DomainLayer", "TestUtils"]

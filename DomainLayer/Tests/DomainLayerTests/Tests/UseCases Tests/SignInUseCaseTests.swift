@@ -5,95 +5,104 @@
 //  Created by Dmytro Yurchenko on 2025-02-21.
 //
 
-import Testing
+import XCTest
 import Combine
 import TestUtils
 @testable import DomainLayer
 
-struct SignInUseCaseTests {
-    @Test func test_signInUseCase_invokes_signIn_inRepository() async throws {
+final class SignInUseCaseTests: XCTestCase {
+    func test_signInUseCase_invokes_signIn_inRepository() async throws {
         let (sut, dependencies) = await makeSut()
         
         _ = try await sut.execute(makeSignInInput()).async()
         
-        #expect(dependencies.authenticationRepository.isSignInInvoked)
+        XCTAssertTrue(dependencies.authenticationRepository.isSignInInvoked)
     }
     
-    @Test func test_signInUseCase_returnsError_afterUnsuccessfull_signIn() async throws {
+    func test_signInUseCase_returnsError_afterUnsuccessfull_signIn() async throws {
         let (sut, dependencies) = await makeSut()
         
         dependencies.authenticationRepository.signInResult = .failure(.other(makeError()))
         
         do {
             _ = try await sut.execute(makeSignInInput()).async()
-            assert(false)
+            
+            XCTFail("Must fail")
         } catch AuthenticationError.dataError {
-            #expect(true)
+            XCTAssert(true, "Caught expected error")
         } catch {
-            assert(false)
+            XCTFail("Wrong error: \(error)")
         }
     }
     
-    @Test func test_signInUseCase_returnsInvalidEmailParsingError_whenEmail_isInvalid() async throws {
+    func test_signInUseCase_returnsInvalidEmailParsingError_whenEmail_isInvalid() async throws {
         let (sut, _) = await makeSut()
         let signInInput = makeSignInInput(email: "invalidEmail")
         
         do {
             _ = try await sut.execute(signInInput).async()
-            assert(false)
+            
+            XCTFail("Must fail")
         } catch AuthenticationError.credentialsParsingError(let error) {
-            #expect(error == .invalidEmail)
+            XCTAssertEqual(error, .invalidEmail)
         } catch {
-            assert(false)
+            XCTFail("Wrong error: \(error)")
         }
     }
     
-    @Test func test_signInUseCase_returnsEmptyEmailParsingError_whenEmail_isEmpty() async throws {
+    func test_signInUseCase_returnsEmptyEmailParsingError_whenEmail_isEmpty() async throws {
         let (sut, _) = await makeSut()
         let signInInput = makeSignInInput(email: "")
         
         do {
             _ = try await sut.execute(signInInput).async()
-            assert(false)
+            
+            XCTFail("Must fail")
         } catch AuthenticationError.credentialsParsingError(let error) {
-            #expect(error == .invalidEmail)
+            XCTAssertEqual(error, .invalidEmail)
         } catch {
-            assert(false)
+            XCTFail("Wrong error: \(error)")
         }
     }
     
-    @Test func test_signInUseCase_returnsInvalidPasswordParsingError_whenPassword_isInvalid() async throws {
+    func test_signInUseCase_returnsInvalidPasswordParsingError_whenPassword_isInvalid() async throws {
         let (sut, _) = await makeSut()
         let signInInput = makeSignInInput(password: "1")
         
         do {
             _ = try await sut.execute(signInInput).async()
-            assert(false)
+            
+            XCTFail("Must fail")
         } catch AuthenticationError.credentialsParsingError(let error) {
-            #expect(error == .invalidPassword)
+            XCTAssertEqual(error, .invalidPassword)
         } catch {
-            assert(false)
+            XCTFail("Wrong error: \(error)")
         }
     }
     
-    @Test func test_signInUseCase_returnsEmptyPasswordParsingError_whenPassword_isEmpty() async throws {
+    func test_signInUseCase_returnsEmptyPasswordParsingError_whenPassword_isEmpty() async throws {
         let (sut, _) = await makeSut()
         let signInInput = makeSignInInput(password: "")
         
         do {
             _ = try await sut.execute(signInInput).async()
-            assert(false)
+            
+            XCTFail("Must fail")
         } catch AuthenticationError.credentialsParsingError(let error) {
-            #expect(error == .invalidPassword)
+            XCTAssertEqual(error, .invalidPassword)
         } catch {
-            assert(false)
+            XCTFail("Wrong error: \(error)")
         }
     }
 }
     
 
 private extension SignInUseCaseTests {
-    func makeSut() async -> (SignInUseCase, SignInUseCase.Dependencies) {
+    func makeSut(
+        file: StaticString = #file,
+        line: UInt = #line
+    ) async -> (SignInUseCase, SignInUseCase.Dependencies) {
+        
         let mockAuthenticationRepository = MockAuthenticationRepository()
         let mockLocalStoreRepository = MockLocalStoreRepository()
         let dependencies = SignInUseCase.Dependencies(
@@ -101,6 +110,8 @@ private extension SignInUseCaseTests {
             mockLocalStoreRepository: mockLocalStoreRepository
         )
         let sut = dependencies.assemble()
+        
+        assertDeallocation(sut, file: file, line: line)
         
         return (sut, dependencies)
     }
