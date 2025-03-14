@@ -14,7 +14,6 @@ public struct Email: Hashable {
         guard let value
         else {
             throw CredentialsParsingError.invalidEmail
-//            throw ParsingError.parsingFailed(message: "\(String(describing: type(of: self))) cannot be empty")
         }
         
         let regex: String = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
@@ -22,7 +21,6 @@ public struct Email: Hashable {
         
         if !test.evaluate(with: value) {
             throw CredentialsParsingError.invalidEmail
-//            throw ParsingError.parsingFailed(message: "Invalid email format")
         } else {
             self.value = value
         }
