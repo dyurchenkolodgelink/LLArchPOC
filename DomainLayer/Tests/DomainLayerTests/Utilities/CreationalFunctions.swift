@@ -17,9 +17,13 @@ func makeSignInInput(
     SignInInput(email: email, password: password)
 }
 
-func makeSignInResult() -> SignInResult {
+func makeSignInResult(
+    token: AuthenticationToken = makeValidAuthenticationToken(),
+    user: User = makeUser()
+) -> SignInResult {
+    
     SignInResult(
-        token: makeValidAuthenticationToken(),
-        user: makeUser()
+        token: token,
+        user: user
     )
 }

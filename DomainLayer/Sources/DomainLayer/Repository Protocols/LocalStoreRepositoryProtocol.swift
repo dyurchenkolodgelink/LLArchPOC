@@ -8,7 +8,7 @@
 import Foundation
 
 public protocol LocalStoreRepositoryProtocol {
-    func store<T>(_ value: T, for key: StorageKey) throws where T: Encodable
+    func store<T>(_ value: T, for key: StorageKey) throws where T: Encodable & Hashable
     func removeValue(for key: StorageKey)
     func getValue<T>(for key: StorageKey) throws -> T where T: Decodable
 }
@@ -16,7 +16,7 @@ public protocol LocalStoreRepositoryProtocol {
 public struct FakeLocalStoreRepository: LocalStoreRepositoryProtocol {
     public init() {}
     
-    public func store<T>(_ value: T, for key: StorageKey) throws where T: Encodable {}
+    public func store<T>(_ value: T, for key: StorageKey) throws where T: Encodable & Hashable {}
     public func getValue<T>(for key: StorageKey) throws -> T where T: Decodable {
         throw ExecutionError.withMessage("Fake Error Message")
     }

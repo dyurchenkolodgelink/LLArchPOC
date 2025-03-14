@@ -11,12 +11,14 @@ public enum DataError: LocalizedError {
     case networkError(Error)
     case responseError(Error)
     case parsingError(Error)
+    case persistenceError(Error)
     case other(Error)
     
     public var errorDescription: String? {
         switch self {
         case .networkError(let error),
                 .parsingError(let error),
+                .persistenceError(let error),
                 .responseError(let error),
                 .other(let error):
             return error.localizedDescription

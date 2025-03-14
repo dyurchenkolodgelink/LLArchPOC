@@ -43,7 +43,7 @@ final class SignInUseCase: UseCase, SignInUseCaseProtocol {
                             
                             return signInResult.user
                         } catch {
-                            throw AuthenticationError.dataError(.other(error))
+                            throw AuthenticationError.dataError(.persistenceError(error))
                         }
                     }
                     .mapError { error in

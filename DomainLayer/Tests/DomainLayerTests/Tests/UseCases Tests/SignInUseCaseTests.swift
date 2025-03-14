@@ -19,6 +19,17 @@ final class SignInUseCaseTests: XCTestCase {
         XCTAssertTrue(dependencies.authenticationRepository.isSignInInvoked)
     }
     
+    func test_storeAuthentication_isInvoked() async throws {
+        let (sut, dependencies) = await makeSut()
+        let token = makeValidAuthenticationToken(value: "New Token")
+        
+        dependencies.authenticationRepository.signInResult = .success(makeSignInResult(token: token))
+        
+        _ = try await sut.execute(makeSignInInput()).async()
+        
+        XCTAssertEqual(dependencies.localStoreRepository.storedValue, token)
+    }
+    
     func test_signInUseCase_returnsError_afterUnsuccessfull_signIn() async throws {
         let (sut, dependencies) = await makeSut()
         
@@ -94,6 +105,29 @@ final class SignInUseCaseTests: XCTestCase {
             XCTFail("Wrong error: \(error)")
         }
     }
+    
+    func test_signInUseCase_returnsDataError_whenFailStoreIntoLocalStoreRepository() async throws {
+        let (sut, dependencies) = await makeSut()
+        let signInInput = makeSignInInput()
+        let errorMessage = "Some error"
+        
+        dependencies.localStoreRepository.storeError = ExecutionError.withMessage(errorMessage)
+        
+        do {
+            _ = try await sut.execute(signInInput).async()
+            
+            XCTFail("Must fail")
+        } catch AuthenticationError.dataError(let error) {
+            switch error {
+            case .persistenceError(let persistenceError):
+                XCTAssertEqual(persistenceError.localizedDescription, errorMessage)
+            default:
+                XCTFail("Wrong error: \(error)")
+            }
+        } catch {
+            XCTFail("Wrong error: \(error)")
+        }
+    }
 }
     
 
@@ -107,7 +141,7 @@ private extension SignInUseCaseTests {
         let mockLocalStoreRepository = MockLocalStoreRepository()
         let dependencies = SignInUseCase.Dependencies(
             authenticationRepository: mockAuthenticationRepository,
-            mockLocalStoreRepository: mockLocalStoreRepository
+            localStoreRepository: mockLocalStoreRepository
         )
         let sut = dependencies.assemble()
         
@@ -120,12 +154,12 @@ private extension SignInUseCaseTests {
 private extension SignInUseCase {
     struct Dependencies {
         let authenticationRepository: MockAuthenticationRepository
-        let mockLocalStoreRepository: MockLocalStoreRepository
+        let localStoreRepository: MockLocalStoreRepository
 
         func assemble() -> SignInUseCase {
             SignInUseCase(
                 repository: authenticationRepository,
-                localStorage: mockLocalStoreRepository
+                localStorage: localStoreRepository
             )
         }
     }

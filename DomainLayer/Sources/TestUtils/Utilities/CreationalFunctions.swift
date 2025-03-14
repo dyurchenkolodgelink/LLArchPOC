@@ -40,6 +40,9 @@ public func makeName() -> Name {
     try! Name("Mocked Name")
 }
 
-public func makeValidAuthenticationToken() -> AuthenticationToken {
-    try! AuthenticationToken("SomeAuthToken")
+public func makeValidAuthenticationToken(
+    value: String = "SomeAuthToken"
+) -> AuthenticationToken {
+    
+    try! AuthenticationToken(value)
 }
