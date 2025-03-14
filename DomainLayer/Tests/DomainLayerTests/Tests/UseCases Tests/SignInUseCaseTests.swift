@@ -7,6 +7,7 @@
 
 import Testing
 import Combine
+import TestUtils
 @testable import DomainLayer
 
 struct SignInUseCaseTests {
@@ -94,8 +95,10 @@ struct SignInUseCaseTests {
 private extension SignInUseCaseTests {
     func makeSut() async -> (SignInUseCase, SignInUseCase.Dependencies) {
         let mockAuthenticationRepository = MockAuthenticationRepository()
+        let mockLocalStoreRepository = MockLocalStoreRepository()
         let dependencies = SignInUseCase.Dependencies(
-            authenticationRepository: mockAuthenticationRepository
+            authenticationRepository: mockAuthenticationRepository,
+            mockLocalStoreRepository: mockLocalStoreRepository
         )
         let sut = dependencies.assemble()
         
@@ -103,25 +106,15 @@ private extension SignInUseCaseTests {
     }
 }
 
-final class MockAuthenticationRepository: AuthenticationRepositoryProtocol {
-    var signInResult: Result<SignInResult, DataError> = .success(makeSignInResult())
-    
-    private(set) var isSignInInvoked = false
-    
-    func signIn(email: Email, password: Password) -> AnyPublisher<SignInResult, DataError> {
-        isSignInInvoked = true
-        
-        return signInResult.publisher.eraseToAnyPublisher()
-    }
-}
-
 private extension SignInUseCase {
     struct Dependencies {
         let authenticationRepository: MockAuthenticationRepository
+        let mockLocalStoreRepository: MockLocalStoreRepository
 
         func assemble() -> SignInUseCase {
             SignInUseCase(
-                repository: authenticationRepository
+                repository: authenticationRepository,
+                localStorage: mockLocalStoreRepository
             )
         }
     }

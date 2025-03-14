@@ -24,7 +24,12 @@ let package = Package(
         ),
         .testTarget(
             name: "iOS_PresentationLayerTests",
-            dependencies: ["iOS_PresentationLayer", "PresentationLayer", "DomainLayer"]
+            dependencies: [
+                "iOS_PresentationLayer",
+                "PresentationLayer",
+                "DomainLayer",
+                .product(name: "TestUtils", package: "DomainLayer")
+            ]
         ),
     ]
 )

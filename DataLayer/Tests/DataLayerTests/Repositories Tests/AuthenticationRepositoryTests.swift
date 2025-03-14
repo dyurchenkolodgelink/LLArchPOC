@@ -11,6 +11,7 @@ import Apollo
 import DomainLayer
 import Combine
 import XCTest
+import TestUtils
 @testable import DataLayer
 
 final class AuthenticationRepositoryTests: XCTestCase {
@@ -209,31 +210,6 @@ func mockResponse<T>(
     MockURLProtocol.requestHandler = nil
     
     return result
-}
-
-func makeEmail() -> Email {
-    try! Email("feafea@feefeafe.com")
-}
-
-func makePassword() -> Password {
-    try! Password("123456789")
-}
-
-func makeError() -> Error {
-    ExecutionError.withMessage("Custom Error")
-}
-
-
-extension AnyPublisher {
-    func async() async throws -> Output? {
-        try await eraseToAnyPublisher().values.first()
-    }
-}
-
-extension AsyncSequence {
-    func first() async rethrows -> Element? {
-        try await first(where: { _ in true})
-    }
 }
 
 func makeMeResponse(

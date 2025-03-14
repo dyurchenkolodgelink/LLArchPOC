@@ -8,13 +8,13 @@
 import Foundation
 import Combine
 
-extension AnyPublisher {
+public extension AnyPublisher {
     func async() async throws -> Output? {
         try await eraseToAnyPublisher().values.first()
     }
 }
 
-extension AsyncSequence {
+public extension AsyncSequence {
     func first() async rethrows -> Element? {
         try await first(where: { _ in true})
     }

@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "DataLayer",
-    platforms: [.macOS(.v10_15), .iOS(.v17), .watchOS(.v10)],
+    platforms: [.macOS(.v14), .iOS(.v17), .watchOS(.v10)],
     products: [
         .library(
             name: "DataLayer",
@@ -25,7 +25,11 @@ let package = Package(
         ),
         .testTarget(
             name: "DataLayerTests",
-            dependencies: ["DataLayer", "DomainLayer"]
+            dependencies: [
+                "DataLayer",
+                "DomainLayer",
+                .product(name: "TestUtils", package: "DomainLayer")
+            ]
         ),
     ]
 )
