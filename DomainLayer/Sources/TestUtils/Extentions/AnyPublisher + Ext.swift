@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 public extension AnyPublisher {
-    func async() async throws -> Output? {
+    @discardableResult func async() async throws -> Output? {
         try await eraseToAnyPublisher().values.first()
     }
 }

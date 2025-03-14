@@ -14,6 +14,7 @@ final class MockAuthenticationRepository: AuthenticationRepositoryProtocol {
     var signInResult: Result<SignInResult, DataError> = .success(makeSignInResult())
     
     private(set) var isSignInInvoked = false
+    private(set) var setAuthentication: Authentication?
     
     func signIn(email: Email, password: Password) -> AnyPublisher<SignInResult, DataError> {
         isSignInInvoked = true
@@ -22,7 +23,7 @@ final class MockAuthenticationRepository: AuthenticationRepositoryProtocol {
     }
     
     func set(authentication: DomainLayer.Authentication) {
-        
+        setAuthentication = authentication
     }
     
     func getAuthentication() -> AnyPublisher<DomainLayer.Authentication, Never> {

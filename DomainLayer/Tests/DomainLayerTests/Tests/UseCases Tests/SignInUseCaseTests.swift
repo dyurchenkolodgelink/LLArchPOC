@@ -145,7 +145,7 @@ private extension SignInUseCaseTests {
         )
         let sut = dependencies.assemble()
         
-        assertDeallocation(sut, file: file, line: line)
+        assertDeallocation(sut, file, line)
         
         return (sut, dependencies)
     }

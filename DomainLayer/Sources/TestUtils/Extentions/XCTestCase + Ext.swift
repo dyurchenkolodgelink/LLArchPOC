@@ -10,8 +10,8 @@ import XCTest
 public extension XCTestCase {
     func assertDeallocation(
         _ object: AnyObject?,
-        file: StaticString = #filePath,
-        line: UInt = #line
+        _ file: StaticString = #filePath,
+        _ line: UInt = #line
     ) {
         addTeardownBlock { [weak object] in
             XCTAssertNil(
