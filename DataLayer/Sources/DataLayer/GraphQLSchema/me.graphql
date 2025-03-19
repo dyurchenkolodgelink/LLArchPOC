@@ -7,20 +7,5 @@ query me {
     userId
     company
     position
-    activeOrganization {
-        id
-        name
-        roles
-        permissions
-        featureFlagMapping {
-            id
-            active
-            featureFlag {
-                id
-                active
-                featureIdentifier
-            }
-        }
-    }
   }
 }

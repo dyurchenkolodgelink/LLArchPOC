@@ -1,41 +1,38 @@
 //
-//  AuthenticationRepositoryTests.swift
+//  File.swift
 //  DataLayer
 //
-//  Created by Dmytro Yurchenko on 2025-03-11.
+//  Created by Dmytro Yurchenko on 2025-03-19.
 //
 
-import Foundation
-import DomainLayer
 import XCTest
-import TestUtils
+import DomainLayer
 @testable import DataLayer
 
-final class AuthenticationRepositoryTests: XCTestCase {
-    func test_signIn_isSuccessfullyParsed_andMapped() async throws {
+final class UserRepositoryTests: XCTestCase {
+    func test_getMe_isSuccessfullyParsedAndMapped() async throws {
         let sut = makeSut()
-        let mockData = makeLoginDataResponse()
+        let mockData = makeMeQueryDataResponse()
+        
         let result = try await mockResponse(
             with: .success(data: mockData),
             requestCheck: { request in
-                request.apolloOperationName == "login"
+                request.apolloOperationName == "me"
             },
             requestExecutionBlock: {
-                try await sut.signIn(
-                    email: makeEmail(),
-                    password: makePassword()
-                ).eraseToAnyPublisher().async()
+                try await sut.getMe()
+                    .eraseToAnyPublisher()
+                    .async()
             }
         )
         
-        XCTAssertEqual(result?.user.id.value, mockData.login?.me?.userId)
-        XCTAssertEqual(result?.user.firstName.value, mockData.login?.me?.firstName)
-        XCTAssertEqual(result?.user.lastName.value, mockData.login?.me?.lastName)
-        XCTAssertEqual(result?.user.email.value, mockData.login?.me?.emailAddress)
-        XCTAssertEqual(result?.token.value, mockData.login?.accountToken)
+        XCTAssertEqual(result?.id.value, mockData.me?.userId)
+        XCTAssertEqual(result?.firstName.value, mockData.me?.firstName)
+        XCTAssertEqual(result?.lastName.value, mockData.me?.lastName)
+        XCTAssertEqual(result?.email.value, mockData.me?.emailAddress)
     }
     
-    func test_signIn_fails_withResponseError() async throws {
+    func test_getMe_fails_withResponseError() async throws {
         let sut = makeSut()
         let errorMessage = "Error message"
         
@@ -43,13 +40,13 @@ final class AuthenticationRepositoryTests: XCTestCase {
             _ = try await mockResponse(
                 with: .failure(message: errorMessage),
                 requestExecutionBlock: {
-                    try await sut.signIn(email: makeEmail(), password: makePassword())
+                    try await sut.getMe()
                         .eraseToAnyPublisher()
                         .async()
                 }
             )
             
-            XCTFail("Sign in must fail here")
+            XCTFail("Get Me must fail here")
         } catch DataError.responseError(let responseError) {
             XCTAssertEqual(responseError.localizedDescription, errorMessage)
         } catch {
@@ -57,7 +54,7 @@ final class AuthenticationRepositoryTests: XCTestCase {
         }
     }
     
-    func test_signIn_fails_withNetworkError() async throws {
+    func test_getMe_fails_withNetworkError() async throws {
         let sut = makeSut()
         
         do {
@@ -65,13 +62,13 @@ final class AuthenticationRepositoryTests: XCTestCase {
                 with: .failure(message: "Error message"),
                 statusCode: 401,
                 requestExecutionBlock: {
-                    try await sut.signIn(email: makeEmail(), password: makePassword())
+                    try await sut.getMe()
                         .eraseToAnyPublisher()
                         .async()
                 }
             )
             
-            XCTFail("Sign in must fail here")
+            XCTFail("Get Me must fail here")
         } catch DataError.networkError {
             XCTAssert(true)
         } catch {
@@ -79,25 +76,23 @@ final class AuthenticationRepositoryTests: XCTestCase {
         }
     }
     
-    func test_signIn_fails_withParsingError_dueToInvalidEmail() async throws {
+    func test_getMe_fails_withParsingError_dueToInvalidEmail() async throws {
         let sut = makeSut()
-        let mockLoginResponse = makeLoginDataResponse(
-            login: makeLoginResponse(
-                meResponse: makeLoginMeResponse(emailAddress: "invalidEmail.com")
-            )
+        let mockMeResponse = makeMeQueryDataResponse(
+            me: makeGetMeResponse(emailAddress: "invalidEmail.com")
         )
         
         do {
             _ = try await mockResponse(
-                with: .success(data: mockLoginResponse),
+                with: .success(data: mockMeResponse),
                 requestExecutionBlock: {
-                    try await sut.signIn(email: makeEmail(), password: makePassword())
+                    try await sut.getMe()
                         .eraseToAnyPublisher()
                         .async()
                 }
             )
             
-            XCTFail("Sign in must fail here")
+            XCTFail("Get Me must fail here")
         } catch DataError.parsingError(let parsingError as CredentialsParsingError) {
             XCTAssertEqual(parsingError, .invalidEmail)
         } catch {
@@ -105,21 +100,21 @@ final class AuthenticationRepositoryTests: XCTestCase {
         }
     }
     
-    func test_signIn_fails_withNoResponseParsingError() async throws {
+    func test_getMe_fails_withNoResponseParsingError() async throws {
         let sut = makeSut()
-        let mockLoginResponse = makeLoginDataResponse(login: nil)
+        let mockMeResponse = makeMeQueryDataResponse(me: nil)
         
         do {
             _ = try await mockResponse(
-                with: .success(data: mockLoginResponse),
+                with: .success(data: mockMeResponse),
                 requestExecutionBlock: {
-                    try await sut.signIn(email: makeEmail(), password: makePassword())
+                    try await sut.getMe()
                         .eraseToAnyPublisher()
                         .async()
                 }
             )
             
-            XCTFail("Sign in must fail here")
+            XCTFail("Get Me must fail here")
         } catch DataError.parsingError(let error as ResponseError) {
             XCTAssertEqual(error, .noResponse)
         } catch {
@@ -128,13 +123,13 @@ final class AuthenticationRepositoryTests: XCTestCase {
     }
 }
 
-private extension AuthenticationRepositoryTests {
+private extension UserRepositoryTests {
     func makeSut(
         file: StaticString = #file,
         line: UInt = #line
-    ) -> AuthenticationRepository {
+    ) -> UserRepository {
         
-        let sut = AuthenticationRepository(
+        let sut = UserRepository(
             graphQLClient: makeGraphQLClient()
         )
         

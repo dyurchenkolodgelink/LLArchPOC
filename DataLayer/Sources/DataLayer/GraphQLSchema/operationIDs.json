@@ -3,8 +3,8 @@
     "name": "login",
     "source": "mutation login($emailAddress: EmailAddress!, $password: String!) {\n  login(emailAddress: $emailAddress, password: $password) {\n    __typename\n    errorMessage\n    message\n    accountToken\n    tokenExpiry\n    me {\n      __typename\n      emailAddress\n      phoneNumber\n      firstName\n      lastName\n      userId\n      company\n      position\n    }\n  }\n}"
   },
-  "088ae4ee888ee72bc104772edcf0a15acc015932567969ebe3ae4420b76c9087": {
+  "30693ecaf14fb1d5703e468936f3c4ce1c2db971a72f02738ced0e3fdec9c9c5": {
     "name": "me",
-    "source": "query me {\n  me {\n    __typename\n    emailAddress\n    phoneNumber\n    firstName\n    lastName\n    userId\n    company\n    position\n    activeOrganization {\n      __typename\n      id\n      name\n      roles\n      permissions\n      featureFlagMapping {\n        __typename\n        id\n        active\n        featureFlag {\n          __typename\n          id\n          active\n          featureIdentifier\n        }\n      }\n    }\n  }\n}"
+    "source": "query me {\n  me {\n    __typename\n    emailAddress\n    phoneNumber\n    firstName\n    lastName\n    userId\n    company\n    position\n  }\n}"
   }
 }

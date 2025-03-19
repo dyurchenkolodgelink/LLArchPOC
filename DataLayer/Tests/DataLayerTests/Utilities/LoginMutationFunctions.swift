@@ -8,7 +8,7 @@
 import Foundation
 @testable import DataLayer
 
-func makeMeResponse(
+func makeLoginMeResponse(
     emailAddress: String = "some@email.com"
 ) -> LoginMutation.Data.Login.Me {
     
@@ -26,7 +26,7 @@ func makeMeResponse(
 func makeLoginResponse(
     errorMessage: String? = nil,
     accountToken: String? = "Some Token",
-    meResponse: LoginMutation.Data.Login.Me? = makeMeResponse()
+    meResponse: LoginMutation.Data.Login.Me? = makeLoginMeResponse()
 ) -> LoginMutation.Data.Login {
     
     LoginMutation.Data.Login(
