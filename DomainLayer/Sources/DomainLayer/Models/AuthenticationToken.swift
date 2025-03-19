@@ -13,7 +13,7 @@ public struct AuthenticationToken: Codable, Hashable {
     public init(_ value: String?) throws {
         guard let value
         else {
-            throw AuthenticationError.dataError(.parsingError(ExecutionError.withMessage("Auth token is empty")))
+            throw ExecutionError.withMessage("Auth token is empty")
         }
         
         self.value = value

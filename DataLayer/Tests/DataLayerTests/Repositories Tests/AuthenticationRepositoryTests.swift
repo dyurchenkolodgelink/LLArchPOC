@@ -126,6 +126,30 @@ final class AuthenticationRepositoryTests: XCTestCase {
             XCTFail("Wrong error appeared: \(error)")
         }
     }
+    
+    func test_signIn_fails_withNoAuthToken_inResponse() async throws {
+        let sut = makeSut()
+        let mockLoginResponse = makeLoginDataResponse(
+            login: makeLoginResponse(accountToken: nil)
+        )
+        
+        do {
+            _ = try await mockResponse(
+                with: .success(data: mockLoginResponse),
+                requestExecutionBlock: {
+                    try await sut.signIn(email: makeEmail(), password: makePassword())
+                        .eraseToAnyPublisher()
+                        .async()
+                }
+            )
+            
+            XCTFail("Sign in must fail here")
+        } catch DataError.parsingError(let error as ExecutionError) {
+            XCTAssertEqual(error.localizedDescription, "Auth token is empty")
+        } catch {
+            XCTFail("Wrong error appeared: \(error)")
+        }
+    }
 }
 
 private extension AuthenticationRepositoryTests {
