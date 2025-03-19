@@ -10,11 +10,14 @@ import TestUtils
 @testable import DomainLayer
 
 final class GetMeUseCaseTests: XCTestCase {
+    private let userRepository = MockUserRepository()
+    private let authenticationRepository = MockAuthenticationRepository()
+    
     func test_happyPath() async throws {
-        let (sut, dependencies) = makeSut()
+        let sut = makeSut()
         let user = makeUser()
         
-        dependencies.userRepository.getMeResult = .success(user)
+        userRepository.getMeResult = .success(user)
         
         let result = try await sut.execute().async()
         
@@ -22,21 +25,21 @@ final class GetMeUseCaseTests: XCTestCase {
     }
     
     func test_happyPath_authenticationIsSet_inAuthenticatioResository() async throws {
-        let (sut, dependencies) = makeSut()
+        let sut = makeSut()
         let user = makeUser()
         
-        dependencies.userRepository.getMeResult = .success(user)
+        userRepository.getMeResult = .success(user)
         
         try await sut.execute().async()
         
-        XCTAssertEqual(dependencies.authenticationRepository.setAuthentication, Authentication.authenticated(user))
+        XCTAssertEqual(authenticationRepository.setAuthentication, Authentication.authenticated(user))
     }
     
     func test_error_isReceivedProperly() async throws {
-        let (sut, dependencies) = makeSut()
+        let sut = makeSut()
         let dataError = DataError.responseError(ExecutionError.withMessage("Response issue"))
         
-        dependencies.userRepository.getMeResult = .failure(dataError)
+        userRepository.getMeResult = .failure(dataError)
         
         do {
             try await sut.execute().async()
@@ -54,30 +57,15 @@ private extension GetMeUseCaseTests {
     func makeSut(
         file: StaticString = #file,
         line: UInt = #line
-    ) -> (GetMeUseCase, Dependencies) {
+    ) -> GetMeUseCase {
         
-        let mockUserRepository = MockUserRepository()
-        let mockAuthenticationRepository = MockAuthenticationRepository()
-        let dependencies = Dependencies(
-            userRepository: mockUserRepository,
-            authenticationRepository: mockAuthenticationRepository
-        )
-        let sut = dependencies.assembleSut()
-        
-        assertDeallocation(sut, file, line)
-        
-        return (sut, dependencies)
-    }
-}
-
-private struct Dependencies {
-    let userRepository: MockUserRepository
-    let authenticationRepository: MockAuthenticationRepository
-    
-    func assembleSut() -> GetMeUseCase {
-        GetMeUseCase(
+        let sut = GetMeUseCase(
             userRepository: userRepository,
             authenticationRepository: authenticationRepository
         )
+        
+        assertDeallocation(sut, file, line)
+        
+        return sut
     }
 }
