@@ -12,6 +12,7 @@ import TestUtils
 final class MockLocalStoreRepository: LocalStoreRepositoryProtocol {
     var storeError: Error?
     private(set) var storedValue: AnyHashable?
+    private(set) var removedValueKey: StorageKey?
     
     func store<T>(_ value: T, for key: DomainLayer.StorageKey) throws where T : Encodable & Hashable {
         if let storeError {
@@ -21,7 +22,9 @@ final class MockLocalStoreRepository: LocalStoreRepositoryProtocol {
         }
     }
     
-    func removeValue(for key: DomainLayer.StorageKey) {}
+    func removeValue(for key: DomainLayer.StorageKey) {
+        removedValueKey = key
+    }
     
     func getValue<T>(for key: DomainLayer.StorageKey) throws -> T where T : Decodable {
         throw ExecutionError.withMessage("sfsfs")
