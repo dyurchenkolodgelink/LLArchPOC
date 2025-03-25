@@ -11,7 +11,7 @@ public struct Email: Hashable {
     public let value: String
     
     public init(_ value: String?) throws {
-        guard let value
+        guard let value 
         else {
             throw CredentialsParsingError.invalidEmail
         }

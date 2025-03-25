@@ -18,19 +18,17 @@ struct WelcomeView: LLView {
                     .foregroundStyle(Color.primaryGreen)
                     .tint(Color.primaryGreen)
                     .padding()
-            } else {
-                if let user = viewModel.user {
-                    VStack {
-                        HStack {
-                            Text(user.firstName.value)
-                            Text(user.lastName.value)
-                        }
-                        
-                        Text(user.email.value)
+            } else if let user = viewModel.user {
+                VStack {
+                    HStack {
+                        Text(user.firstName.value)
+                        Text(user.lastName.value)
                     }
-                } else {
-                    Text("Failed to get a user")
+                    
+                    Text(user.email.value)
                 }
+            } else {
+                Text("Failed to get a user")
             }
             
             Spacer()
