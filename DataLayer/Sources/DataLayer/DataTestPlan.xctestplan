@@ -1,7 +1,7 @@
 {
   "configurations" : [
     {
-      "id" : "7E6B12DB-B63F-4844-B665-73F3CBBC8FF8",
+      "id" : "E9E5277D-BCE8-4441-B237-6717AF326E58",
       "name" : "Configuration 1",
       "options" : {
 
@@ -17,8 +17,8 @@
       "parallelizable" : false,
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "DomainLayerTests",
-        "name" : "DomainLayerTests"
+        "identifier" : "DataLayerTests",
+        "name" : "DataLayerTests"
       }
     }
   ],
