@@ -76,12 +76,12 @@ public class BaseViewModel: ObservableObject {
     func refresh() {}
     
     func subscribePublishers() {
-        $errorMessage
-            .compactMap { $0 }
-            .sink { [unowned self] errorMessage in
-                //sideCar.analyticsLogger.log(error: errorMessage)
-            }
-            .store(in: &cancellableSet)
+//        $errorMessage
+//            .compactMap { $0 }
+//            .sink { [unowned self] errorMessage in
+//                //sideCar.analyticsLogger.log(error: errorMessage)
+//            }
+//            .store(in: &cancellableSet)
     }
     
 //    func log(event: AnalyticsLogEvent) {

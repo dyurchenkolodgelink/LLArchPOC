@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "7E6B12DB-B63F-4844-B665-73F3CBBC8FF8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "DomainLayerTests",
+        "name" : "DomainLayerTests"
+      }
+    }
+  ],
+  "version" : 1
+}

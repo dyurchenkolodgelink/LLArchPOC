@@ -41,7 +41,6 @@ private extension WelcomeViewModel {
         isLoading = true
         
         useCases.getMeUseCase.execute()
-            .delay(for: 3.0, scheduler: DispatchQueue.global())
             .receive(on: OperationQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] in

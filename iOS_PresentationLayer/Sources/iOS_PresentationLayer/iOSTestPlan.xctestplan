@@ -1,0 +1,26 @@
+{
+  "configurations" : [
+    {
+      "id" : "6839D07D-A392-4237-BC0A-778B34692525",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random",
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "iOS_PresentationLayerTests",
+        "name" : "iOS_PresentationLayerTests"
+      }
+    }
+  ],
+  "version" : 1
+}
