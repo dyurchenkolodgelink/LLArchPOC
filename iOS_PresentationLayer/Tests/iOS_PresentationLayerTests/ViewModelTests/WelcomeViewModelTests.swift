@@ -24,9 +24,9 @@ final class WelcomeViewModelTests: XCTestCase {
         let sut = try makeSut()
         getMeUseCase.result = .success(makeUser())
         
-        let isLoading = wait(for: sut.$isLoading.collect(2).eraseToAnyPublisher()) {
+        let isLoading = try XCTUnwrap(wait(for: sut.$isLoading.collect(2).eraseToAnyPublisher()) {
             sut.onViewLoaded()
-        }.values.first!.last!
+        }.values.first?.last, "isLoading was not emitted two times")
         
         XCTAssertTrue(isLoading)
     }
@@ -35,9 +35,9 @@ final class WelcomeViewModelTests: XCTestCase {
         let sut = try makeSut()
         getMeUseCase.result = .success(makeUser())
         
-        let isLoading = wait(for: sut.$isLoading.collect(3).eraseToAnyPublisher()) {
+        let isLoading = try XCTUnwrap(wait(for: sut.$isLoading.collect(3).eraseToAnyPublisher()) {
             sut.onViewLoaded()
-        }.values.first!.last!
+        }.values.first?.last, "isLoading was not emitted three times")
         
         XCTAssertFalse(isLoading)
     }
@@ -53,9 +53,9 @@ final class WelcomeViewModelTests: XCTestCase {
         let sut = try makeSut()
         getMeUseCase.result = .success(mockUser)
         
-        let user = wait(for: sut.$user.dropFirst().eraseToAnyPublisher()) {
+        let user = try XCTUnwrap(wait(for: sut.$user.dropFirst().eraseToAnyPublisher()) {
             sut.onViewLoaded()
-        }.values.first!
+        }.values.first)
         
         XCTAssertEqual(mockUser, user)
     }
@@ -71,9 +71,9 @@ final class WelcomeViewModelTests: XCTestCase {
         let mockErrorMessage = "Some custom error"
         getMeUseCase.result = .failure(.parsingError(ExecutionError.withMessage(mockErrorMessage)))
         
-        let errorMessage = wait(for: sut.$errorMessage.dropFirst().eraseToAnyPublisher()) {
+        let errorMessage = try XCTUnwrap(wait(for: sut.$errorMessage.dropFirst().eraseToAnyPublisher()) {
             sut.onViewLoaded()
-        }.values.last!
+        }.values.last)
         
         XCTAssertEqual(errorMessage, mockErrorMessage)
     }

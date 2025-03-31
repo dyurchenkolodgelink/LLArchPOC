@@ -24,9 +24,9 @@ final class LoginViewModelTests: XCTestCase {
         let sut = try makeSut()
         signInUseCase.result = .success(makeUser())
         
-        let isLoading = wait(for: sut.$isLoading.collect(2).eraseToAnyPublisher()) {
+        let isLoading = try XCTUnwrap(wait(for: sut.$isLoading.collect(2).eraseToAnyPublisher()) {
             sut.login()
-        }.values.first!.last!
+        }.values.first?.last, "isLoading was not emitted for two times")
         
         XCTAssertTrue(isLoading)
     }
@@ -35,9 +35,9 @@ final class LoginViewModelTests: XCTestCase {
         let sut = try makeSut()
         signInUseCase.result = .success(makeUser())
         
-        let isLoading = wait(for: sut.$isLoading.collect(3).eraseToAnyPublisher()) {
+        let isLoading = try XCTUnwrap(wait(for: sut.$isLoading.collect(3).eraseToAnyPublisher()) {
             sut.login()
-        }.values.first!.last!
+        }.values.first?.last, "isLoading was not emitted for three times")
         
         XCTAssertFalse(isLoading)
     }
@@ -52,9 +52,9 @@ final class LoginViewModelTests: XCTestCase {
         let sut = try makeSut()
         signInUseCase.result = .failure(.credentialsParsingError(.invalidEmail))
         
-        let errorMessage = wait(for: sut.$errorMessage.dropFirst().eraseToAnyPublisher()) {
+        let errorMessage = try XCTUnwrap(wait(for: sut.$errorMessage.dropFirst().eraseToAnyPublisher()) {
             sut.login()
-        }.values.last!
+        }.values.last, "errorMessage was not emitted")
         
         XCTAssertEqual(errorMessage, "Invalid email format")
     }
